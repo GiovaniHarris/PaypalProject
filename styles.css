@@ -161,3 +161,31 @@ button:hover {
     border: 1px solid #ccc;  /* light grey border */
 }
 
+/* Global styling for the dropdown */
+#country {
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+/* On focus styling to give a bit of interaction */
+#country:focus {
+    border-color: #0070ba;
+    outline: none;
+}
+
+/* Styling for the options */
+#country option {
+    padding: 6px 10px;
+    font-size: 16px;
+}
+
+/* If you want a hover effect for the options (optional) */
+#country option:hover {
+    background-color: #eaeaea;
+}

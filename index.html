@@ -32,7 +32,7 @@
             
             <div class="input-row">
                 <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" value="Jane">
+                <input type="text" id="firstName" name="firstName" value="Jane" required>
             </div>
     
             <div class="input-row">
@@ -47,7 +47,7 @@
     
             <div class="input-row">
                 <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" value="123-456-7890">
+                <input type="tel" id="phone" name="phone" placeholder="123-456-7890">
             </div>
     
             <h3>Shipping Address</h3>
@@ -61,6 +61,11 @@
                 <label for="address2">Address Line 2:</label>
                 <input type="text" id="address2" name="address2" value="Apt 4B">
             </div>
+
+            <div class="input-row">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" value="Los Angeles">
+            </div>            
     
             <div class="input-row">
                 <label for="state">State/Province:</label>
@@ -74,8 +79,15 @@
     
             <div class="input-row">
                 <label for="country">Country:</label>
-                <input type="text" id="country" name="country" value="US">
+                <select id="country" name="country">
+                    <option value="US" data-phone-prefix="+1">United States</option>
+                    <option value="CA" data-phone-prefix="+1">Canada</option>
+                    <option value="GB" data-phone-prefix="+44">United Kingdom</option>
+                    <option value="BR" data-phone-prefix="+55">Brazil</option>
+                    <!-- Add other countries here -->
+                </select>
             </div>
+            
         </form>
     </div>    
     

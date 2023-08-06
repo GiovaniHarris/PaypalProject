@@ -14,74 +14,80 @@ app.use(express.json());
 
 app.post("/pay", (req, res) => {
   try {
-    const { firstName, lastName, email, phone, address1, address2, state, zip, country } = req.body;
+    const { firstName, lastName, email, phone, address1, address2, city, state, zip, country } = req.body;
 
     const paymentDetails = {
-    intent: "sale",
-    payer: {
-      payment_method: "paypal",
-      payer_info: {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        phone: {
-          type: "MOBILE",
-          number: phone // Adjust format if needed
-        },
-        billing_address: {
-          line1: address1,
-          line2: address2,
-          city: state, // This may need adjustment based on your form's structure
-          postal_code: zip,
-          country_code: country
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+        payer_info: {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          payer_id: "", // If you have a payer_id, add it here. Otherwise, it can be omitted.
+          phone: {
+            type: "MOBILE",
+            number: phone // The phone number needs to be in E.164 format. Consider validation.
+          },
+          billing_address: {
+            line1: address1,
+            line2: address2 || null, // If address2 is empty, you can set it to null.
+            city: city,
+            state: state,
+            postal_code: zip,
+            country_code: country // This needs to be the two-letter country code (e.g., "US").
+          }
+        }
+      },
+      transactions: [
+        {
+          description: "This is the payment description.",
+          invoice_number: "", // If you have an invoice_number, add it here. Otherwise, it can be omitted.
+          amount: {
+            currency: "USD",
+            total: "19.99",
+            details: { // Optional breakdown of the amount.
+              subtotal: "19.99"
+            }
+          },
+          item_list: {
+            items: [
+              {
+                name: "Cool T-shirt",
+                sku: "123456",
+                price: "19.99",
+                currency: "USD",
+                quantity: 1
+              }
+            ]
+          }
+        }
+      ],
+      redirect_urls: {
+        return_url: "https://mighty-shelf-27108.herokuapp.com/success",
+        cancel_url: "https://mighty-shelf-27108.herokuapp.com/cancel"
+      }
+    };
+
+    paypal.payment.create(paymentDetails, function (error, payment) {
+      if (error) {
+        console.error("PayPal Error:", error);
+        res.status(400).send('Payment processing failed.');
+        return;
+      }
+
+      for (let i = 0; i < payment.links.length; i++) {
+        if (payment.links[i].rel === "approval_url") {
+          res.json({ orderID: payment.id }); // Send back the order ID to frontend
+          return;
         }
       }
-    },
-    redirect_urls: {
-      return_url: "https://mighty-shelf-27108.herokuapp.com/success",
-      cancel_url: "https://mighty-shelf-27108.herokuapp.com/cancel",
-    },
-    transactions: [
-      {
-        item_list: {
-          items: [
-            {
-              name: "Cool T-shirt",
-              sku: "123456",
-              price: "19.99",
-              currency: "USD",
-              quantity: 1,
-            },
-          ],
-        },
-        amount: {
-          currency: "USD",
-          total: "19.99",
-        },
-        description: "This is the payment description.",
-      },
-    ],
-  };
+    });
 
-  paypal.payment.create(paymentDetails, function (error, payment) {
-    if (error) {
-      console.error("PayPal Error:", error);
-      res.status(400).send('Payment processing failed.');
-      return;
-    }
-
-    for (let i = 0; i < payment.links.length; i++) {
-      if (payment.links[i].rel === "approval_url") {
-        res.json({ orderID: payment.id }); // Send back the order ID to frontend
-        return; // stop further processing
-      }
-    }
-});
-
-} catch (error) {
-  console.error("Error:", error);
-  res.status(500).send('Internal Server Error');
-}
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.get("/success", (req, res) => {

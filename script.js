@@ -1,11 +1,19 @@
 paypal.Buttons({
     createOrder: function (data, actions) {
         // Collect buyer's information from the form
+        let phoneNumber = document.querySelector('#country option:checked').getAttribute('data-phone-prefix') + document.getElementById('phone').value.replace(/[^0-9]/g, '');
+
+        // Simple logic to format phone number for E.164 (this assumes all numbers are US numbers for illustration)
+        // But with our updated method, we're using the selected country's prefix.
+        if (phoneNumber.charAt(0) !== '+') {
+            phoneNumber = '+' + phoneNumber; // Add a + if not present (shouldn't happen with our current setup)
+        }
+
         const buyerInfo = {
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
             email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
+            phone: phoneNumber,
             address1: document.getElementById('address1').value,
             address2: document.getElementById('address2').value,
             state: document.getElementById('state').value,
