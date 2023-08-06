@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="wrapper">
+    <h1>Shopping Cart</h1>
+
+    <!-- Product -->
+    <div class="product-container">
+        <div class="product-header">
+            <span>Product</span>
+            <span>Item Number</span>
+            <span>Price</span>
+        </div>
+        <div class="product-details">
+            <div class="product-image-name">
+                <img src="Image/Shoes-1.jpg" alt="Shoes-01">
+                <span>Product Name</span>
+            </div>
+            <span>12345678</span>
+            <span>$9.99</span>
+        </div>
+    </div>
+    
+    <!-- Buyer Information -->
+    <div class="info-box">
+        <form id="buyerInfoForm">
+            <h2>Buyer Information</h2>
+            
+            <div class="input-row">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" value="Jane">
+            </div>
+    
+            <div class="input-row">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" value="Doe">
+            </div>
+            
+            <div class="input-row">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="jane.doe@example.com">
+            </div>
+    
+            <div class="input-row">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" value="123-456-7890">
+            </div>
+    
+            <h3>Shipping Address</h3>
+            
+            <div class="input-row">
+                <label for="address1">Address Line 1:</label>
+                <input type="text" id="address1" name="address1" value="123 Main St">
+            </div>
+    
+            <div class="input-row">
+                <label for="address2">Address Line 2:</label>
+                <input type="text" id="address2" name="address2" value="Apt 4B">
+            </div>
+    
+            <div class="input-row">
+                <label for="state">State/Province:</label>
+                <input type="text" id="state" name="state" value="CA">
+            </div>
+    
+            <div class="input-row">
+                <label for="zip">Zip/Postal Code:</label>
+                <input type="text" id="zip" name="zip" value="90001">
+            </div>
+    
+            <div class="input-row">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" value="US">
+            </div>
+        </form>
+    </div>    
+    
+
+    <!-- PayPal button container -->
+    <div id="paypal-button-container"></div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AVCCbyMcLoxLYq2N7pDzsKMoS5O6h9oyEWewfM9ob3zubR4ZXqD4E-Fhyh8M2d82p6gpSmdKW0XmsPr-&currency=USD"></script>
+    <script src="/script.js"></script>
+     </div>
+</body>
+</html>

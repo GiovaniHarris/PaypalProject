@@ -1,0 +1,163 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+h1, h2 {
+    color: #333;
+    padding: 10px 0;
+}
+
+/* Product Styles */
+.product {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+    max-width: 200px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Buyer Info Styles */
+.buyer-info {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.buyer-info label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.buyer-info input[type="text"], .buyer-info input[type="email"], .buyer-info input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+.buyer-info .address {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Buttons */
+button {
+    background-color: #ff9800;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #e17a00;
+}
+.wrapper {
+    display: flex;
+    justify-content: center; /* Horizontally aligns content in the center */
+    align-items: center;     /* Vertically aligns content in the center */
+    min-height: 100vh;       /* Takes up full viewport height */
+    flex-direction: column;  /* Aligns children elements vertically in a column */
+}
+.product-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 20px auto;
+    padding: 0px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* This adds a slight shadow around the box */
+    border-radius: 5px; /* This rounds the corners of the box */
+    text-align: center;  /* Center the text inside the container */
+    /* ... other styles ... */
+}
+
+.product-header {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 22px 0;
+    background-color: #f0f0f0; /* A light gray color, adjust as needed */
+    border: 1px solid black; /* A black border */
+    padding: 10px 0; /* Some padding to give it space */
+    border-radius: 0px; /* Optional: To round the corners slightly */
+}
+
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 10px;
+}
+
+.product-image-name {
+    display: flex;
+    align-items: center;
+}
+
+.product-image-name img {
+    max-width: 100px; /* Adjust as per your requirement */
+    margin-right: 10px;
+}
+
+.info-box {
+    width: 80%; /* Adjust based on your design preference */
+    margin: 20px auto; /* Centers the box and gives space above and below */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow */
+    border-radius: 4px; /* Optional: To round the corners slightly */
+}
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;  /* space between each row */
+}
+
+.input-row label {
+    flex: 1;  /* makes the label and input occupy equal widths */
+    margin-right: 10px;  /* space between the label and input */
+}
+
+.input-row input {
+    flex: 2;  /* gives the input twice the width of the label */
+    padding: 5px;  /* some padding for aesthetics */
+    border-radius: 3px;  /* rounded edges */
+    border: 1px solid #ccc;  /* light grey border */
+}
+
