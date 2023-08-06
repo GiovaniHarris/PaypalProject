@@ -10,16 +10,18 @@ paypal.configure({
 });
 
 app.use(express.static(path.join(__dirname, '.')));
+app.use(express.json());
 
 app.post("/pay", (req, res) => {
-  const paymentDetails = {
+  try {
+    const paymentDetails = {
     intent: "sale",
     payer: {
       payment_method: "paypal",
     },
     redirect_urls: {
-      return_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      return_url: "https://mighty-shelf-27108.herokuapp.com/success",
+      cancel_url: "https://mighty-shelf-27108.herokuapp.com/cancel",
     },
     transactions: [
       {
@@ -45,18 +47,25 @@ app.post("/pay", (req, res) => {
 
   paypal.payment.create(paymentDetails, function (error, payment) {
     if (error) {
-      throw error;
-    } else {
-      for (let i = 0; i < payment.links.length; i++) {
-        if (payment.links[i].rel === "approval_url") {
-          res.redirect(payment.links[i].href);
-        }
+      console.error("PayPal Error:", error);
+      res.status(400).send('Payment processing failed.');
+      return;
+    }
+
+    for (let i = 0; i < payment.links.length; i++) {
+      if (payment.links[i].rel === "approval_url") {
+        res.redirect(payment.links[i].href);
       }
     }
   });
+} catch (error) {
+  console.error("Error:", error);
+  res.status(500).send('Internal Server Error');
+}
 });
 
 app.get("/success", (req, res) => {
+try {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
 
@@ -72,26 +81,40 @@ app.get("/success", (req, res) => {
     ],
   };
 
-  paypal.payment.execute(
-    paymentId,
-    execute_payment_json,
-    function (error, payment) {
-      if (error) {
-        console.log(error.response);
-        throw error;
-      } else {
-        console.log("Get Payment Response");
-        console.log(JSON.stringify(payment));
-        res.send("Success");
-      }
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+      console.log(error.response);
+      res.status(400).send('Payment execution failed.');
+      return;
+    } else {
+      console.log("Get Payment Response");
+      console.log(JSON.stringify(payment));
+      res.send("Success");
     }
-  );
+  });
+} catch (error) {
+  console.error("Error:", error);
+  res.status(500).send('Internal Server Error');
+}
 });
 
 app.get("/cancel", (req, res) => res.send("Cancelled"));
 
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
+app.get("/", (req, res) => {
+try {
+  res.sendFile(path.join(__dirname, "index.html"));
+} catch (error) {
+  console.error("Error:", error);
+  res.status(500).send('Internal Server Error');
+}
+});
 
-app.listen(3000, () => console.log("Server Started"));
+app.use((err, req, res, next) => {
+console.error(err.stack);
+res.status(500).send('Something broke!');
+});
 
-//query-params 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+console.log(`Server is running on port ${PORT}`);
+});
