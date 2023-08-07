@@ -13,9 +13,9 @@ paypal.Buttons({
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
             email: document.getElementById('email').value,
-            phone: phoneNumber,
             address1: document.getElementById('address1').value,
             address2: document.getElementById('address2').value,
+            city: document.getElementById('city').value,
             state: document.getElementById('state').value,
             zip: document.getElementById('zip').value,
             country: document.getElementById('country').value,
@@ -34,7 +34,9 @@ paypal.Buttons({
             }
             return res.json();
         }).then(data => {
-            return data.orderID;
+            console.log({ data })
+            alert(`Transaction completed! Your order ID is ${data.orderID}. Thank you for your purchase!`)
+            return data;
         }).catch(error => {
             console.error('There was a problem with the fetch operation:', error.message);
             // You can inform users here e.g., show a modal or an alert about the error
@@ -44,7 +46,7 @@ paypal.Buttons({
         // Capture the funds from the transaction
         return actions.order.capture().then(function (details) {
             // Show a success message to the buyer
-            alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            alert(`Transaction completed by ${details.payer.name.given_name}! Your order ID is ${data.orderID}. Thank you for your purchase!`);
         });
     }
 }).render('#paypal-button-container');
