@@ -28,8 +28,16 @@ paypal.Buttons({
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(buyerInfo)
-        }).then(res => res.json()).then(data => {
-            return data.orderID; // Order ID from the response
+        }).then(res => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok'); // or you can get more specific error info from `res`
+            }
+            return res.json();
+        }).then(data => {
+            return data.orderID;
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error.message);
+            // You can inform users here e.g., show a modal or an alert about the error
         });
     },
     onApprove: function (data, actions) {
